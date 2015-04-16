@@ -18,10 +18,10 @@
 #
 # Create vhosts configuration for Nginx.
 #
-unless node['applications'].nil?
-    node['applications'].each do |name, config|
+unless node['sites'].nil?
+    node['sites'].each do |name, config|
         template "#{node['nginx']['dir']}/sites-available/#{config['fqdn']}.conf" do
-            source "default-application-site.erb"
+            source "#{config['nginx']['vhost_template']}"
             owner "root"
             group "root"
             mode 00644
@@ -29,16 +29,3 @@ unless node['applications'].nil?
         end
     end
 end
-
-unless node['services'].nil?
-    node['services'].each do |name, config|
-        template "#{node['nginx']['dir']}/sites-available/#{config['fqdn']}.conf" do
-            source "default-service-site.erb"
-            owner "root"
-            group "root"
-            mode 00644
-            variables( :config => config )
-        end
-    end
-end
-
