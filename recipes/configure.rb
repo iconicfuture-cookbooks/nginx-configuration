@@ -15,16 +15,16 @@
 # limitations under the License.
 #
 
-include_recipe 'configure_applications'
-include_recipe 'configure_services'
-include_recipe 'configure_sites'
+include_recipe 'nginx-configuration::configure_applications'
+include_recipe 'nginx-configuration::configure_services'
+include_recipe 'nginx-configuration::configure_sites'
 
-hostsfile_entry '192.168.10.1' do
-  hostname  "local.development"
-  action    :append
-end
+#hostsfile_entry '192.168.10.1' do
+#  hostname  "local.development"
+#  action    :append
+#end
 
-hostsfile_entry '127.0.0.2' do
-  hostname  "#{appconfig['fqdn']}"
-  action    :append
-end
+#hostsfile_entry '127.0.0.2' do
+#  hostname  "#{appconfig['fqdn']}"
+#  action    :append
+#end

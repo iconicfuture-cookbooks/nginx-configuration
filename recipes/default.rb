@@ -16,7 +16,7 @@
 #
 
 # deploy vhosts
-include_recipe "deploy"
+include_recipe "nginx-configuration::deploy"
 
 # enable vhosts
-include_recipe "configure"
+include_recipe "nginx-configuration::configure"

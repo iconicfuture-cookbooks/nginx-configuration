@@ -5,7 +5,7 @@ server {
     access_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.access.log;
     error_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.error.log;
 
-    root /var/www/<%= @config['fqdn'] %>/public;
+    root /var/www/<%= @config['fqdn'] %>/silex/public/;
 
     index <%= @config['nginx']['index_file'] %>;
 
@@ -20,10 +20,9 @@ server {
     location ~ .(php|phtml)$ {
         fastcgi_pass <%= @config['nginx']['fastcgi_pass'] %>;
         fastcgi_index <%= @config['nginx']['index_file'] %>;
-        fastcgi_param APPLICATION_ENV local_development;
         fastcgi_param PHP_VALUE "newrelic.appname=Local <%= @config['nginx']['appname'] %>";
-        fastcgi_buffers 8 4k;
-        fastcgi_buffer_size 4k;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
         fastcgi_connect_timeout <%= @config['nginx']['fastcgi_connect_timeout'] %>;
         fastcgi_read_timeout <%= @config['nginx']['fastcgi_read_timeout'] %>;
         include fastcgi_params;
