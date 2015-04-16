@@ -15,9 +15,9 @@
 # limitations under the License.
 #
 
-include_recipe 'iconicfuture::configure_applications'
-include_recipe 'iconicfuture::configure_services'
-include_recipe 'iconicfuture::configure_sites'
+include_recipe 'configure_applications'
+include_recipe 'configure_services'
+include_recipe 'configure_sites'
 
 hostsfile_entry '192.168.10.1' do
   hostname  "local.development"
