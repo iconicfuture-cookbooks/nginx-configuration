@@ -1,10 +1,10 @@
 name             "nginx-configuration"
-maintainer_email "mathias.latzko@iconicfuture.com"
-maintainer       "Mathias Latzko"
-license          "Apache 2.0"
-description      "Configure nginx vhosts for a application."
+maintainer_email "thomas.liebscher@iconicfuture.com"
+maintainer       "Thomas Liebscher"
+license          "Apache Software License 2.0"
+description      "Configure nginx sites"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.0.1"
+version          "0.0.2"
 
 depends 'nginx'
 depends 'hostsfile'

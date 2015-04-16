@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nginx-configuration
-# Recipe:: default
+# Recipe:: configure
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,16 @@
 # limitations under the License.
 #
 
-# deploy vhosts
-include_recipe "nginx-configuration::deploy"
+include_recipe 'iconicfuture::configure_applications'
+include_recipe 'iconicfuture::configure_services'
+include_recipe 'iconicfuture::configure_sites'
 
-# enable vhosts
-include_recipe "nginx-configuration::configure"
+hostsfile_entry '192.168.10.1' do
+  hostname  "local.development"
+  action    :append
+end
+
+hostsfile_entry '127.0.0.2' do
+  hostname  "#{appconfig['fqdn']}"
+  action    :append
+end
