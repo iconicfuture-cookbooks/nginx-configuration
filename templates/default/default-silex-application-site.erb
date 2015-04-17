@@ -20,7 +20,7 @@ server {
     location ~ .(php|phtml)$ {
         fastcgi_pass <%= @config['nginx']['fastcgi_pass'] %>;
         fastcgi_index <%= @config['nginx']['index_file'] %>;
-        fastcgi_param PHP_VALUE "newrelic.appname=Local <%= @config['nginx']['appname'] %>";
+        fastcgi_param PHP_VALUE "newrelic.appname=Local <%= @config['newrelic']['appname'] %>";
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;
         fastcgi_connect_timeout <%= @config['nginx']['fastcgi_connect_timeout'] %>;

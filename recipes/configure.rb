@@ -15,9 +15,7 @@
 # limitations under the License.
 #
 
-include_recipe 'nginx-configuration::configure_applications'
-include_recipe 'nginx-configuration::configure_services'
-include_recipe 'nginx-configuration::configure_sites'
+include_recipe 'nginx-configuration::configure_vhosts'
 
 #hostsfile_entry '192.168.10.1' do
 #  hostname  "local.development"
