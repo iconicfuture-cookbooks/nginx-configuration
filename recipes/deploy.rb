@@ -20,12 +20,14 @@
 #
 unless node['sites'].nil?
     node['sites'].each do |name, config|
-        template "#{node['nginx']['dir']}/sites-available/#{config['fqdn']}.conf" do
-            source "#{config['nginx']['vhost_template']}"
-            owner "root"
-            group "root"
-            mode 00644
-            variables( :config => config )
+        unless config['nginx'].nil?
+            template "#{node['nginx']['dir']}/sites-available/#{config['fqdn']}.conf" do
+                source "#{config['nginx']['vhost_template']}"
+                owner "root"
+                group "root"
+                mode 00644
+                variables( :config => config )
+            end
         end
     end
 end
