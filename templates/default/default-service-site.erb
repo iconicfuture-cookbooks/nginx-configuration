@@ -4,7 +4,7 @@ server {
     access_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.access.log;
     error_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.error.log;
 
-    root /var/www/<%= @config['fqdn'] %>/public;
+    root /var/www/<%= @config['fqdn'] %>/app;
 
     index <%= @config['nginx']['index_file'] %>;
 
