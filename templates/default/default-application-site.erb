@@ -2,30 +2,45 @@ server {
     listen <%= node['nginx']['port'] %>;
     server_name <%= @config['fqdn'] %>;
 
-    access_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.access.log;
-    error_log <%= node['nginx']['log_dir'] %>/<%= @config['fqdn'] %>.error.log;
+    access_log <%= node['nginx']['log_dir'] %>/<%= node['fqdn'] %>-<%= @config['fqdn'] %>.access.log;
+    error_log <%= node['nginx']['log_dir'] %>/<%= node['fqdn'] %>-<%= @config['fqdn'] %>.error.log;
 
     root /var/www/<%= @config['fqdn'] %>/public;
 
-    index <%= @config['nginx']['index_file'] %>;
+    index /index.php;
+    error_page  404 405 = /index.php;
 
-    error_page  404 405 = <%= @config['nginx']['index_file'] %>;
-
+<% if @config[:nginx][:client_max_body_size].nil? -%>
+    client_max_body_size <%= node['nginx-configuration']['client_max_body_size'] %>;
+<% else -%>
     client_max_body_size <%= @config['nginx']['client_max_body_size'] %>;
+<% end -%>
 
     location / {
-        try_files $uri $uri/ <%= @config['nginx']['index_file'] %>?$args;
+        try_files $uri $uri/ /index.php?$args;
     }
 
     location ~ .(php|phtml)$ {
+<% if @config[:nginx][:fastcgi_pass].nil? -%>
+        fastcgi_pass <%= node['nginx-configuration']['fastcgi_pass'] %>;
+<% else -%>
         fastcgi_pass <%= @config['nginx']['fastcgi_pass'] %>;
-        fastcgi_index <%= @config['nginx']['index_file'] %>;
+<% end -%>
+        fastcgi_index /index.php;
         fastcgi_param APPLICATION_ENV local_development;
         fastcgi_param PHP_VALUE "newrelic.appname=Local <%= @config['newrelic']['appname'] %>";
         fastcgi_buffers 8 4k;
         fastcgi_buffer_size 4k;
+<% if @config[:nginx][:fastcgi_connect_timeout].nil? -%>
+        fastcgi_connect_timeout <%= node['nginx-configuration']['fastcgi_connect_timeout'] %>;
+<% else -%>
         fastcgi_connect_timeout <%= @config['nginx']['fastcgi_connect_timeout'] %>;
+<% end -%>
+<% if @config[:nginx][:fastcgi_read_timeout].nil? -%>
+        fastcgi_read_timeout <%= node['nginx-configuration']['fastcgi_read_timeout'] %>;
+<% else -%>
         fastcgi_read_timeout <%= @config['nginx']['fastcgi_read_timeout'] %>;
+<% end -%>
         include fastcgi_params;
     }
 }
