@@ -17,5 +17,5 @@
 
 default['nginx-configuration']['fastcgi_pass']            = '127.0.0.1:9000'
 default['nginx-configuration']['client_max_body_size']    = '1m'
-default['nginx-configuration']['fastcgi_connect_timeout'] = '2s'
-default['nginx-configuration']['fastcgi_read_timeout']    = '5s'
+default['nginx-configuration']['fastcgi_connect_timeout'] = '60s'
+default['nginx-configuration']['fastcgi_read_timeout']    = '60s'
