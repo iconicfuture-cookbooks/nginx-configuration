@@ -1,0 +1,12 @@
+server {
+  listen <%= node['nginx']['port'] %>;
+  server_name <%= @config['fqdn'] %>;
+
+  access_log <%= node['nginx']['log_dir'] %>/<%= node['fqdn'] %>-<%= @config['fqdn'] %>.access.log;
+  error_log <%= node['nginx']['log_dir'] %>/<%= node['fqdn'] %>-<%= @config['fqdn'] %>.error.log;
+
+  location / {
+    root   /var/www/<%= @config['fqdn'] %>/asset;
+    index /index.html;
+  }
+}
