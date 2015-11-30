@@ -2,8 +2,8 @@ server {
     listen   80;
     server_name  <%= @config['fqdn'] %>;
 
-    access_log  /var/log/nginx/<%= @config['fqdn'] %>.access.log;
-    error_log /var/log/nginx/<%= @config['fqdn'] %>.error.log
+    access_log  /var/log/vagrant/<%= @config['fqdn'] %>.access.log;
+    error_log /var/log/vagrant/<%= @config['fqdn'] %>.error.log
 
     root /srv/<%= @config['fqdn'] %>/src/public;
     index /index.php;
