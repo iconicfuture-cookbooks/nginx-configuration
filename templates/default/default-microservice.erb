@@ -1,0 +1,26 @@
+server {
+    listen   80;
+    server_name  <%= @config['fqdn'] %>;
+
+    access_log  /var/log/nginx/<%= @config['fqdn'] %>.access.log;
+    error_log /var/log/nginx/<%= @config['fqdn'] %>.error.log
+
+    root /srv/<%= @config['fqdn'] %>/src/public;
+    index /index.php;
+
+    client_max_body_size 1m;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ .(php|phtml)$ {
+        fastcgi_pass 127.0.0.1:9000
+        fastcgi_index /index.php;
+        fastcgi_buffers 8 4k;
+        fastcgi_buffer_size 4k;
+        fastcgi_connect_timeout 60s;
+        fastcgi_read_timeout 60s;
+        include fastcgi_params;
+    }
+}
