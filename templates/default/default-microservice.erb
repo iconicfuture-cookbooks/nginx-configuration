@@ -3,7 +3,7 @@ server {
     server_name  <%= @config['fqdn'] %>;
 
     access_log  /var/log/vagrant/<%= @config['fqdn'] %>.access.log;
-    error_log /var/log/vagrant/<%= @config['fqdn'] %>.error.log
+    error_log /var/log/vagrant/<%= @config['fqdn'] %>.error.log;
 
     root /srv/<%= @config['fqdn'] %>/src/public;
     index /index.php;
@@ -15,7 +15,7 @@ server {
     }
 
     location ~ .(php|phtml)$ {
-        fastcgi_pass 127.0.0.1:9000
+        fastcgi_pass 127.0.0.1:9000;
         fastcgi_index /index.php;
         fastcgi_buffers 8 4k;
         fastcgi_buffer_size 4k;
